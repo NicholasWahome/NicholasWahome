@@ -6,4 +6,4 @@ During my ML internship, I created image classification models using various dee
 
 Please note that my GitHub profile is still a work in progress, and I'm continuously adding new projects and improving existing ones. I appreciate your patience and feedback as I work to create a polished portfolio of my work.
 
-View Portfolio here : nicholaswahome.github.io/NicholasWahome/
+View Portfolio here : https://nicholaswahome.github.io/NicholasWahome/
