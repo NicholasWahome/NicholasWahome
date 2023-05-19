@@ -23,3 +23,4 @@ View Portfolio here : https://nicholaswahome.github.io/NicholasWahome/
 <img align="left" alt="NumPy" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/numpy/numpy-original.svg" />
 
                                                                                                                                  
+<img align = "right" alt = "48px" src="https://github.com/NicholasWahome/NicholasWahome/blob/main/images/Untitled.gif" alt="Your GIF" />
