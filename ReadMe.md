@@ -5,7 +5,7 @@ I'm a software engineering student at Concordia, with experience in **Java, Pyth
 Please note that my GitHub profile is still a work in progress, and I'm continuously adding new projects and improving existing ones!
 
 View Portfolio here : https://nicholaswahome.github.io/NicholasWahome/
-
+<img align = "right" width = "250px" src="https://github.com/NicholasWahome/NicholasWahome/blob/main/images/Untitled.gif" alt="Your GIF" />
 
 <img align="left" alt="HTML5" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" />
 <img align="left" alt="CSS" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" />
@@ -23,4 +23,4 @@ View Portfolio here : https://nicholaswahome.github.io/NicholasWahome/
 <img align="left" alt="NumPy" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/numpy/numpy-original.svg" />
 
                                                                                                                                  
-<img align = "right" alt = "48px" src="https://github.com/NicholasWahome/NicholasWahome/blob/main/images/Untitled.gif" alt="Your GIF" />
+
