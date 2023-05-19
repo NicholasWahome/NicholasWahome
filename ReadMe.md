@@ -7,7 +7,7 @@ Please note that my GitHub profile is still a work in progress, and I'm continuo
 View Portfolio here : https://nicholaswahome.github.io/NicholasWahome/
 
 Connect with me 😊 : <a href="https://www.linkedin.com/in/nicholas-werugia/"> LinkedIn</a>
-<img align = "right" width = "250px" src="https://github.com/NicholasWahome/NicholasWahome/blob/main/images/Untitled.gif" alt="Your GIF" />
+<img align = "right" width = "250px" src="https://github.com/NicholasWahome/NicholasWahome/blob/main/images/WelcomeGif.gif" alt="Your GIF" />
 
 <img align="left" alt="HTML5" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" />
 <img align="left" alt="CSS" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" />
