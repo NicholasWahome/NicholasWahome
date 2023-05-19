@@ -1,9 +1,25 @@
 # Welcome to my GitHub profile! 👋
 
-I'm a software engineering student at Concordia, with experience in **Java, Python, HTML, CSS, Node.js, and JavaScript**. I also have experience with various data science and machine learning tools such as **MongoDB, TensorFlow, Keras, Pandas, React.js, R, Octave, NumPy, and more**.
+I'm a software engineering student at Concordia, with experience in **Java, Python, HTML, CSS, Node.js, and JavaScript**. I also have experience with various data science and machine learning tools such as **MongoDB, TensorFlow, Keras, Pandas, React.js, R, Octave, NumPy, and more**. 
 
-During my ML internship, I created image classification models using various deep learning techniques. I'm passionate about exploring the intersection of software development and data science, and I'm always looking for new projects to work on.
-
-Please note that my GitHub profile is still a work in progress, and I'm continuously adding new projects and improving existing ones. I appreciate your patience and feedback as I work to create a polished portfolio of my work.
+Please note that my GitHub profile is still a work in progress, and I'm continuously adding new projects and improving existing ones!
 
 View Portfolio here : https://nicholaswahome.github.io/NicholasWahome/
+
+
+<img align="left" alt="HTML5" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" />
+<img align="left" alt="CSS" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" />
+<img align="left" alt="JavaScript" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" />
+<img align="left" alt="Python" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" />
+<img align="left" alt="Java" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/java/java-original.svg" />
+<img align="left" alt="Node.js" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original.svg" />
+<img align="left" alt="MongoDB" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/mongodb/mongodb-original.svg" />
+<img align="left" alt="TensorFlow" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/tensorflow/tensorflow-original.svg" />
+<img align="left" alt="Keras" width="48px" src="https://github.com/valohai/ml-logos/blob/master/keras.svg" />
+<img align="left" alt="Pandas" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/pandas/pandas-original.svg" />
+<img align="left" alt="React.js" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" />
+<img align="left" alt="R" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/r/r-original.svg"/>
+<img align="left" alt="Octave" width="48px" src="https://www.gnu.org/software/octave/img/octave-logo.svg" />
+<img align="left" alt="NumPy" width="48px" src="https://github.com/devicons/devicon/blob/master/icons/numpy/numpy-original.svg" />
+
+                                                                                                                                 
