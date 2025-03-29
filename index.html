@@ -3,71 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nicholas Werugia | Terminal Portfolio</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>Nicholas Werugia | Developer Portfolio</title>
     <style>
         :root {
-            --bg-color: #0d1117;
-            --terminal-bg: #161b22;
-            --text-color: #58a6ff;
-            --text-secondary: #8b949e;
-            --accent-color: #58a6ff;
-            --success-color: #3fb950;
-            --error-color: #f85149;
-            --prompt-color: #3fb950;
-            --command-color: #e6edf3;
-            --link-color: #58a6ff;
-            --border-color: #30363d;
+            --shopify-green: #008060;
+            --shopify-light-green: #d1f0e6;
+            --terminal-bg: #1a1a1a;
+            --terminal-text: #f0f0f0;
+            --accent-color: #008060;
+            --success-color: #008060;
+            --secondary-color: #6d7175;
+            --terminal-border: #2e2e2e;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', monospace;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 20px;
-            overflow: hidden; /* Prevent scrollbars from Three.js canvas */
-            position: relative;
-        }
-        
-        #three-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        body, html {
             height: 100%;
-            z-index: 0;
-            opacity: 0.4; /* Semi-transparent to not distract from content */
+            background-color: #f9fafb;
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
         .terminal {
+            width: 100%;
+            max-width: 900px;
+            height: 85vh;
             background-color: var(--terminal-bg);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            flex: 1;
-            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 1; /* Ensure terminal is above the Three.js background */
-            backdrop-filter: blur(5px); /* Add slight blur effect for glass-like appearance */
+            overflow: hidden;
         }
 
         .terminal-header {
-            background-color: var(--border-color);
-            padding: 8px 15px;
+            background-color: var(--terminal-border);
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -78,36 +61,38 @@
             gap: 8px;
         }
 
-        .control-btn {
+        .control-dot {
             width: 12px;
             height: 12px;
             border-radius: 50%;
+            cursor: pointer;
         }
 
-        .close-btn {
-            background-color: var(--error-color);
+        .control-red {
+            background-color: #ff5f56;
         }
 
-        .minimize-btn {
-            background-color: #f7ca18;
+        .control-yellow {
+            background-color: #ffbd2e;
         }
 
-        .maximize-btn {
-            background-color: var(--success-color);
+        .control-green {
+            background-color: #27c93f;
         }
 
         .terminal-title {
-            color: var(--text-secondary);
+            color: #a9a9a9;
             font-size: 14px;
         }
 
         .terminal-body {
-            padding: 15px;
-            overflow-y: auto;
             flex: 1;
+            padding: 15px 20px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            color: var(--terminal-text);
+            font-size: 15px;
             line-height: 1.5;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border-color) transparent;
         }
 
         .terminal-body::-webkit-scrollbar {
@@ -115,51 +100,67 @@
         }
 
         .terminal-body::-webkit-scrollbar-track {
-            background: transparent;
+            background: var(--terminal-bg);
         }
 
         .terminal-body::-webkit-scrollbar-thumb {
-            background-color: var(--border-color);
+            background-color: var(--terminal-border);
             border-radius: 4px;
         }
 
+        .ascii-art {
+            color: var(--shopify-green);
+            white-space: pre;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .command-output {
+            margin-bottom: 20px;
+        }
+
+        .command-line {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
         .prompt {
-            color: var(--prompt-color);
-            margin-right: 8px;
+            color: var(--shopify-green);
+            margin-right: 10px;
         }
 
         .command {
-            color: var(--command-color);
+            color: var(--terminal-text);
         }
 
         .output {
-            margin: 10px 0 20px;
-            color: var(--text-secondary);
+            color: #a9a9a9;
+            padding-left: 20px;
+            margin-bottom: 20px;
         }
 
-        .user-input-line {
+        .input-line {
             display: flex;
-            margin-top: 5px;
+            align-items: center;
         }
 
         #user-input {
+            flex: 1;
             background: transparent;
             border: none;
             outline: none;
-            color: var(--command-color);
+            color: var(--terminal-text);
             font-family: 'Courier New', monospace;
-            font-size: 16px;
-            width: 100%;
+            font-size: 15px;
         }
 
-        /* Blinking cursor */
         .cursor {
-            display: inline-block;
             width: 10px;
             height: 18px;
-            background-color: var(--command-color);
+            background-color: var(--terminal-text);
+            display: inline-block;
             animation: blink 1s step-end infinite;
-            margin-left: 1px;
+            margin-left: 5px;
         }
 
         @keyframes blink {
@@ -167,96 +168,110 @@
             50% { opacity: 0; }
         }
 
-        .help-list {
-            list-style-type: none;
-            margin-left: 15px;
-        }
-
-        .help-list li {
-            margin-bottom: 5px;
-        }
-
-        .help-command {
-            color: var(--accent-color);
+        .highlight {
+            color: var(--shopify-green);
             font-weight: bold;
-            width: 120px;
-            display: inline-block;
         }
 
-        a {
-            color: var(--link-color);
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .project-container {
+        .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
             margin-top: 15px;
         }
 
         .project-card {
-            border: 1px solid var(--border-color);
+            border: 1px solid #333;
             border-radius: 5px;
             padding: 15px;
             background-color: rgba(255, 255, 255, 0.05);
         }
 
         .project-title {
-            color: var(--link-color);
+            color: var(--shopify-green);
             font-weight: bold;
             margin-bottom: 10px;
         }
 
         .project-description {
-            color: var(--text-secondary);
-            font-size: 14px;
             margin-bottom: 10px;
+            font-size: 14px;
         }
 
         .project-link {
+            color: #add8e6;
+            text-decoration: none;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        .skill-tag {
             display: inline-block;
-            margin-top: 5px;
+            background-color: rgba(0, 128, 96, 0.2);
+            color: var(--shopify-light-green);
+            padding: 3px 8px;
+            border-radius: 3px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-size: 12px;
         }
 
-        .ascii-art {
-            color: var(--accent-color);
-            white-space: pre;
-            line-height: 1.2;
-            margin-bottom: 15px;
+        .contact-info {
+            margin-top: 15px;
         }
 
-        /* Media Queries */
+        .contact-item {
+            margin-bottom: 8px;
+        }
+
+        .contact-label {
+            color: var(--shopify-green);
+            margin-right: 10px;
+        }
+
+        .help-command {
+            color: var(--shopify-green);
+            font-weight: bold;
+            width: 120px;
+            display: inline-block;
+        }
+
+        .help-description {
+            color: #a9a9a9;
+        }
+
         @media (max-width: 768px) {
-            .project-container {
+            .terminal {
+                height: 90vh;
+            }
+            
+            .project-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div id="three-background"></div>
-    <div class="terminal">
-        <div class="terminal-header">
-            <div class="terminal-controls">
-                <div class="control-btn close-btn"></div>
-                <div class="control-btn minimize-btn"></div>
-                <div class="control-btn maximize-btn"></div>
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <div class="control-dot control-red"></div>
+                    <div class="control-dot control-yellow"></div>
+                    <div class="control-dot control-green"></div>
+                </div>
+                <div class="terminal-title">nicholas@werugia:~/portfolio</div>
             </div>
-            <div class="terminal-title">nicholas@werugia:~/portfolio</div>
-        </div>
-        <div class="terminal-body" id="terminal-body">
-            <div class="ascii-art">
- _   _ _      _           _                 
-| \ | (_)    | |         | |                
-|  \| |_  ___| |__   ___ | | __ _ ___       
-| . ` | |/ __| '_ \ / _ \| |/ _` / __|      
-| |\  | | (__| | | | (_) | | (_| \__ \      
-\_| \_/_|\___|_| |_|\___/|_|\__,_|___/      
+            <div class="terminal-body" id="terminal-body">
+                <div class="ascii-art" id="ascii-art">
+ _   _ _      _           _                        
+| \ | (_)    | |         | |                       
+|  \| |_  ___| |__   ___ | | __ _ ___              
+| . ` | |/ __| '_ \ / _ \| |/ _` / __|             
+| |\  | | (__| | | | (_) | | (_| \__ \             
+\_| \_/_|\___|_| |_|\___/|_|\__,_|___/             
                         
 __          __                   _       
 \ \        / /                  (_)      
@@ -267,366 +282,318 @@ __          __                   _
                             __/ |        
                            |___/         
 </div>
-            <div class="command-line">
-                <span class="prompt">visitor@nicholas-werugia:~$</span>
-                <span class="command">echo "Welcome to my terminal portfolio!"</span>
-            </div>
-            <div class="output">
-                Welcome to my terminal portfolio!
-            </div>
+                <div class="command-output">
+                    <div class="command-line">
+                        <span class="prompt">visitor@portfolio:~$</span>
+                        <span class="command">whoami</span>
+                    </div>
+                    <div class="output">
+                        <p>Hi there! I'm <span class="highlight">Nicholas Werugia</span>, a software developer with a passion for building innovative solutions.</p>
+                        <p>I'm applying for a position at <span class="highlight">Shopify</span> where I can contribute my skills in development, team leadership, and problem-solving.</p>
+                        <p>Type <span class="highlight">help</span> to see available commands.</p>
+                    </div>
+                </div>
 
-            <div class="command-line">
-                <span class="prompt">visitor@nicholas-portfolio:~$</span>
-                <span class="command">help</span>
-            </div>
-            <div class="output">
-                Available commands:
-                <ul class="help-list">
-                    <li><span class="help-command">about</span> - Learn about me</li>
-                    <li><span class="help-command">projects</span> - View my projects</li>
-                    <li><span class="help-command">skills</span> - View my technical skills</li>
-                    <li><span class="help-command">contact</span> - How to reach me</li>
-                    <li><span class="help-command">clear</span> - Clear the terminal</li>
-                    <li><span class="help-command">help</span> - Display this help message</li>
-                </ul>
-                Type a command and press Enter to execute.
-            </div>
+                <div id="command-history"></div>
 
-            <div id="command-history"></div>
-
-            <div class="user-input-line">
-                <span class="prompt">visitor@nicholas-portfolio:~$</span>
-                <input type="text" id="user-input" autofocus spellcheck="false">
-                <span class="cursor"></span>
+                <div class="input-line">
+                    <span class="prompt">visitor@portfolio:~$</span>
+                    <input type="text" id="user-input" autofocus spellcheck="false">
+                    <span class="cursor" id="cursor"></span>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const terminal = document.getElementById('terminal-body');
-        const userInput = document.getElementById('user-input');
-        const commandHistory = document.getElementById('command-history');
+        document.addEventListener('DOMContentLoaded', function() {
+            const terminal = document.getElementById('terminal-body');
+            const userInput = document.getElementById('user-input');
+            const commandHistory = document.getElementById('command-history');
+            const cursor = document.getElementById('cursor');
 
-        // Focus on input when clicking anywhere in the terminal
-        terminal.addEventListener('click', () => {
-            userInput.focus();
-        });
+            // Focus on input when clicking anywhere in the terminal
+            terminal.addEventListener('click', function() {
+                userInput.focus();
+                cursor.style.display = 'inline-block';
+            });
 
-        userInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                const command = userInput.value.trim();
-                processCommand(command);
-                userInput.value = '';
-                // Scroll to the bottom
-                terminal.scrollTop = terminal.scrollHeight;
+            // Handle input focus/blur to control cursor visibility
+            userInput.addEventListener('focus', function() {
+                cursor.style.display = 'inline-block';
+            });
+
+            userInput.addEventListener('blur', function() {
+                cursor.style.display = 'none';
+            });
+
+            // Handle Enter key
+            userInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const command = userInput.value.trim();
+                    processCommand(command);
+                    userInput.value = '';
+                    terminal.scrollTop = terminal.scrollHeight;
+                }
+            });
+
+            function processCommand(command) {
+                addToHistory(command);
+
+                switch(command.toLowerCase()) {
+                    case 'help':
+                        showHelp();
+                        break;
+                    case 'about':
+                        showAbout();
+                        break;
+                    case 'projects':
+                        showProjects();
+                        break;
+                    case 'skills':
+                        showSkills();
+                        break;
+                    case 'contact':
+                        showContact();
+                        break;
+                    case 'clear':
+                        clearTerminal();
+                        break;
+                    case 'why shopify':
+                    case 'whyshopify':
+                        whyShopify();
+                        break;
+                    case '':
+                        addNewInputLine();
+                        break;
+                    default:
+                        showUnknownCommand(command);
+                }
+
+                // Re-focus on the new input field
+                setTimeout(() => {
+                    const newInput = document.getElementById('user-input');
+                    if (newInput) newInput.focus();
+                }, 10);
             }
-        });
 
-        function processCommand(command) {
-            // Add command to history
-            addToHistory(command);
-
-            // Process command
-            switch(command.toLowerCase()) {
-                case 'help':
-                    showHelp();
-                    break;
-                case 'about':
-                    showAbout();
-                    break;
-                case 'projects':
-                    showProjects();
-                    break;
-                case 'skills':
-                    showSkills();
-                    break;
-                case 'contact':
-                    showContact();
-                    break;
-                case 'clear':
-                    clearTerminal();
-                    break;
-                case '':
-                    // Just add a new line for empty commands
-                    addNewInputLine();
-                    break;
-                default:
-                    showUnknownCommand(command);
+            function addToHistory(command) {
+                const commandLine = document.createElement('div');
+                commandLine.className = 'command-line';
+                commandLine.innerHTML = `<span class="prompt">visitor@portfolio:~$</span><span class="command">${command}</span>`;
+                commandHistory.appendChild(commandLine);
             }
-        }
 
-        function addToHistory(command) {
-            const commandLine = document.createElement('div');
-            commandLine.className = 'command-line';
-            commandLine.innerHTML = `<span class="prompt">visitor@nicholas-portfolio:~$</span><span class="command">${command}</span>`;
-            commandHistory.appendChild(commandLine);
-        }
+            function addOutput(html) {
+                const outputElement = document.createElement('div');
+                outputElement.className = 'output';
+                outputElement.innerHTML = html;
+                commandHistory.appendChild(outputElement);
+            }
 
-        function addOutput(output) {
-            const outputElement = document.createElement('div');
-            outputElement.className = 'output';
-            outputElement.innerHTML = output;
-            commandHistory.appendChild(outputElement);
-        }
+            function addNewInputLine() {
+                const inputLine = document.querySelector('.input-line');
+                if (inputLine) {
+                    inputLine.remove();
+                }
 
-        function addNewInputLine() {
-            const inputLine = document.createElement('div');
-            inputLine.className = 'user-input-line';
-            inputLine.innerHTML = `<span class="prompt">visitor@nicholas-portfolio:~$</span>`;
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.id = 'user-input';
-            input.autofocus = true;
-            input.spellcheck = false;
-            
-            const cursor = document.createElement('span');
-            cursor.className = 'cursor';
-            
-            document.querySelector('.user-input-line').remove();
-            inputLine.appendChild(input);
-            inputLine.appendChild(cursor);
-            terminal.appendChild(inputLine);
-            input.focus();
-        }
+                const newInputLine = document.createElement('div');
+                newInputLine.className = 'input-line';
+                newInputLine.innerHTML = `
+                    <span class="prompt">visitor@portfolio:~$</span>
+                    <input type="text" id="user-input" autofocus spellcheck="false">
+                    <span class="cursor" id="cursor"></span>
+                `;
+                terminal.appendChild(newInputLine);
 
-        function showHelp() {
-            const help = `
-                Available commands:
-                <ul class="help-list">
-                    <li><span class="help-command">about</span> - Learn about me</li>
-                    <li><span class="help-command">projects</span> - View my projects</li>
-                    <li><span class="help-command">skills</span> - View my technical skills</li>
-                    <li><span class="help-command">contact</span> - How to reach me</li>
-                    <li><span class="help-command">clear</span> - Clear the terminal</li>
-                    <li><span class="help-command">help</span> - Display this help message</li>
+                const newUserInput = document.getElementById('user-input');
+                newUserInput.focus();
+
+                // Re-attach event listeners
+                newUserInput.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        const command = newUserInput.value.trim();
+                        processCommand(command);
+                        newUserInput.value = '';
+                        terminal.scrollTop = terminal.scrollHeight;
+                    }
+                });
+
+                newUserInput.addEventListener('focus', function() {
+                    document.getElementById('cursor').style.display = 'inline-block';
+                });
+
+                newUserInput.addEventListener('blur', function() {
+                    document.getElementById('cursor').style.display = 'none';
+                });
+            }
+
+            function showHelp() {
+                const helpContent = `
+                <p>Available commands:</p>
+                <p><span class="help-command">about</span> <span class="help-description">Learn about me</span></p>
+                <p><span class="help-command">projects</span> <span class="help-description">View my projects</span></p>
+                <p><span class="help-command">skills</span> <span class="help-description">View my technical skills</span></p>
+                <p><span class="help-command">contact</span> <span class="help-description">How to reach me</span></p>
+                <p><span class="help-command">why shopify</span> <span class="help-description">Why I want to join Shopify</span></p>
+                <p><span class="help-command">clear</span> <span class="help-description">Clear the terminal</span></p>
+                <p><span class="help-command">help</span> <span class="help-description">Display this help message</span></p>
+                `;
+                addOutput(helpContent);
+                addNewInputLine();
+            }
+
+            function showAbout() {
+                const aboutContent = `
+                <p>Hi! I'm <span class="highlight">Nicholas Werugia</span>, a software developer with strong technical and leadership skills.</p>
+                
+                <p>I've led development teams and worked on a variety of projects including:</p>
+                <ul style="list-style-type: none; padding-left: 20px;">
+                    <li>• Machine learning models for image classification</li>
+                    <li>• Team-based software projects like CondoCare and GetSoft</li>
+                    <li>• Database design and implementation</li>
+                    <li>• UI/UX design projects</li>
                 </ul>
-                Type a command and press Enter to execute.
-            `;
-            addOutput(help);
-            addNewInputLine();
-        }
+                
+                <p>My experience includes leading two teams of 10 each simultaneously in Software Architecture and Software Requirements.</p>
+                
+                <p>I'm passionate about building products that solve real problems and provide excellent user experiences.</p>
+                `;
+                addOutput(aboutContent);
+                addNewInputLine();
+            }
 
-        function showAbout() {
-            const about = `
-                <div class="about-section">
-                    <h3 style="color: var(--accent-color); margin-bottom: 10px;">Nicholas Werugia</h3>
-                    <p>Hello! I'm a software developer passionate about creating elegant solutions to complex problems.</p>
-                    <p>I've worked on various projects ranging from machine learning models like Natural Scenes Image Classification 
-                    to team-based software projects like CondoCare and GetSoft.</p>
-                    <p>My experience includes leading teams in Software Architecture and Design and Software Requirements, 
-                    where I successfully managed two teams of 10 each simultaneously.</p>
-                    <p>Type 'projects' to see my work or 'skills' to see my technical expertise.</p>
-                </div>
-            `;
-            addOutput(about);
-            addNewInputLine();
-        }
-
-        function showProjects() {
-            const projects = `
-                <h3 style="color: var(--accent-color); margin-bottom: 15px;">My Projects</h3>
-                <div class="project-container">
+            function showProjects() {
+                const projectsContent = `
+                <p>Here are some of my key projects:</p>
+                
+                <div class="project-grid">
                     <div class="project-card">
                         <div class="project-title">Natural Scenes Model</div>
-                        <div class="project-description">Image Classification of Intel Natural Scenes dataset using Tensorflow & Keras</div>
+                        <div class="project-description">Image Classification using TensorFlow & Keras on Intel's Natural Scenes dataset.</div>
                         <a href="https://github.com/NicholasWahome/SimpleImageClassification" class="project-link" target="_blank">View on GitHub →</a>
                     </div>
+                    
                     <div class="project-card">
-                        <div class="project-title">CondoCare - Team Project</div>
-                        <div class="project-description">A platform for managing condominium services and maintenance</div>
+                        <div class="project-title">CondoCare</div>
+                        <div class="project-description">Platform for managing condominium services and maintenance.</div>
                         <a href="https://github.com/NicholasWahome/CondoCare" class="project-link" target="_blank">View on GitHub →</a>
                     </div>
+                    
                     <div class="project-card">
-                        <div class="project-title">GetSoft - Team Project</div>
-                        <div class="project-description">Software distribution platform developed as part of a team</div>
+                        <div class="project-title">GetSoft</div>
+                        <div class="project-description">Software distribution platform developed as part of a team.</div>
                         <a href="https://github.com/NicholasWahome/SOEN287" class="project-link" target="_blank">View on GitHub →</a>
                     </div>
+                    
                     <div class="project-card">
-                        <div class="project-title">StackOverwhelmed - Team project</div>
-                        <div class="project-description">Collaborative Q&A platform for developers</div>
+                        <div class="project-title">StackOverwhelmed</div>
+                        <div class="project-description">Collaborative Q&A platform for developers.</div>
                         <a href="https://github.com/NicholasWahome/StackOverwhelmed" class="project-link" target="_blank">View on GitHub →</a>
                     </div>
+                    
                     <div class="project-card">
-                        <div class="project-title">SparksOfJoy - Team Prize Winner</div>
-                        <div class="project-description">Award-winning project from conuhacks-2022</div>
+                        <div class="project-title">SparksOfJoy</div>
+                        <div class="project-description">Award-winning project from conuhacks-2022.</div>
                         <a href="https://github.com/NicholasWahome/conuhacks-2022" class="project-link" target="_blank">View on GitHub →</a>
                     </div>
-                    <div class="project-card">
-                        <div class="project-title">Database Team Project</div>
-                        <div class="project-description">Collaborative database design and implementation</div>
-                        <a href="https://github.com/NicholasWahome/Database-Team-Project" class="project-link" target="_blank">View on GitHub →</a>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-title">UI Project</div>
-                        <div class="project-description">User interface design and development project (SpecSquad)</div>
-                        <a href="https://github.com/NicholasWahome/SOEN357" class="project-link" target="_blank">View on GitHub →</a>
-                    </div>
                 </div>
-            `;
-            addOutput(projects);
-            addNewInputLine();
-        }
-
-        function showSkills() {
-            const skills = `
-                <h3 style="color: var(--accent-color); margin-bottom: 15px;">Technical Skills</h3>
-                
-                <div style="margin-bottom: 15px;">
-                    <h4 style="color: var(--command-color); margin-bottom: 8px;">Programming Languages</h4>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">JavaScript</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Python</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Java</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">HTML/CSS</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">SQL</span>
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <h4 style="color: var(--command-color); margin-bottom: 8px;">Frameworks & Technologies</h4>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">React</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">TensorFlow</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Keras</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Git</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Node.js</span>
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <h4 style="color: var(--command-color); margin-bottom: 8px;">Soft Skills</h4>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Team Leadership</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Project Management</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Problem Solving</span>
-                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Communication</span>
-                    </div>
-                </div>
-                
-                <p>Type 'projects' to see these skills in action!</p>
-            `;
-            addOutput(skills);
-            addNewInputLine();
-        }
-
-        function showContact() {
-            const contact = `
-                <h3 style="color: var(--accent-color); margin-bottom: 15px;">Contact Me</h3>
-                <p>I'm always open to interesting conversations and opportunities!</p>
-                <ul style="list-style-type: none; margin: 15px 0;">
-                    <li style="margin-bottom: 10px;">📧 Email: <a href="mailto:your.email@example.com">your.email@example.com</a></li>
-                    <li style="margin-bottom: 10px;">🔗 GitHub: <a href="https://github.com/NicholasWahome" target="_blank">github.com/NicholasWahome</a></li>
-                    <li style="margin-bottom: 10px;">🔗 LinkedIn: <a href="https://linkedin.com/in/nicholas-wahome" target="_blank">linkedin.com/in/nicholas-wahome</a></li>
-                </ul>
-                <p>Feel free to reach out for collaborations, job opportunities, or just to say hello!</p>
-            `;
-            addOutput(contact);
-            addNewInputLine();
-        }
-
-        function clearTerminal() {
-            commandHistory.innerHTML = '';
-            addNewInputLine();
-        }
-
-        function showUnknownCommand(command) {
-            addOutput(`Command not found: ${command}. Type 'help' to see available commands.`);
-            addNewInputLine();
-        }
-
-        // Initialize by processing 'help' command to show available commands
-        processCommand('about');
-    </script>
-    
-    <script>
-        // Three.js background with floating prism
-        const initThreeJS = () => {
-            // Scene setup
-            const scene = new THREE.Scene();
-            
-            // Camera setup
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
-            
-            // Renderer setup
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(0x000000, 0); // Transparent background
-            document.getElementById('three-background').appendChild(renderer.domElement);
-            
-            // Create prism geometry (hexagonal)
-            const geometry = new THREE.CylinderGeometry(1, 1, 2, 6, 1, false);
-            
-            // Materials with different colors for each face
-            const materials = [
-                new THREE.MeshBasicMaterial({ color: 0x58a6ff, transparent: true, opacity: 0.7, wireframe: true }),
-                new THREE.MeshBasicMaterial({ color: 0x3fb950, transparent: true, opacity: 0.7, wireframe: true })
-            ];
-            
-            // Create multiple prisms
-            const prisms = [];
-            for (let i = 0; i < 5; i++) {
-                const prism = new THREE.Mesh(geometry, materials[i % 2]);
-                
-                // Random positions
-                prism.position.x = (Math.random() - 0.5) * 10;
-                prism.position.y = (Math.random() - 0.5) * 10;
-                prism.position.z = (Math.random() - 0.5) * 5 - 2;
-                
-                // Random rotation
-                prism.rotation.x = Math.random() * Math.PI;
-                prism.rotation.y = Math.random() * Math.PI;
-                
-                // Random rotation speeds
-                prism.userData = {
-                    rotationSpeedX: (Math.random() - 0.5) * 0.01,
-                    rotationSpeedY: (Math.random() - 0.5) * 0.01,
-                    floatSpeed: Math.random() * 0.005 + 0.002,
-                    floatDistance: Math.random() * 0.5 + 0.5,
-                    floatOffset: Math.random() * Math.PI * 2
-                };
-                
-                scene.add(prism);
-                prisms.push(prism);
+                `;
+                addOutput(projectsContent);
+                addNewInputLine();
             }
-            
-            // Add some subtle lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-            directionalLight.position.set(0, 1, 1);
-            scene.add(directionalLight);
-            
-            // Animation loop
-            const animate = () => {
-                requestAnimationFrame(animate);
+
+            function showSkills() {
+                const skillsContent = `
+                <p><span class="highlight">Programming Languages</span></p>
+                <p>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">HTML/CSS</span>
+                    <span class="skill-tag">SQL</span>
+                </p>
                 
-                // Rotate and float each prism
-                prisms.forEach(prism => {
-                    prism.rotation.x += prism.userData.rotationSpeedX;
-                    prism.rotation.y += prism.userData.rotationSpeedY;
-                    
-                    // Gentle floating motion
-                    const time = Date.now() * 0.001;
-                    prism.position.y += Math.sin(time * prism.userData.floatSpeed + prism.userData.floatOffset) * 0.01 * prism.userData.floatDistance;
-                });
+                <p><span class="highlight">Frameworks & Technologies</span></p>
+                <p>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">Keras</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">RESTful APIs</span>
+                </p>
                 
-                renderer.render(scene, camera);
-            };
-            
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-            
-            animate();
-        };
-        
-        // Initialize Three.js scene after page loads
-        window.addEventListener('load', initThreeJS);
+                <p><span class="highlight">Leadership & Soft Skills</span></p>
+                <p>
+                    <span class="skill-tag">Team Leadership</span>
+                    <span class="skill-tag">Project Management</span>
+                    <span class="skill-tag">Problem Solving</span>
+                    <span class="skill-tag">Communication</span>
+                    <span class="skill-tag">Agile Methodologies</span>
+                </p>
+                `;
+                addOutput(skillsContent);
+                addNewInputLine();
+            }
+
+            function whyShopify() {
+                const whyShopifyContent = `
+                <p>I'm drawn to Shopify for several key reasons:</p>
+                
+                <p><span class="highlight">Impact and Mission</span>: I'm excited about Shopify's mission to make commerce better for everyone. The platform empowers millions of entrepreneurs worldwide, and I want to be part of building tools that have such meaningful impact.</p>
+                
+                <p><span class="highlight">Engineering Excellence</span>: Shopify's commitment to technical excellence and innovation is evident in its architecture, scale, and engineering culture. I'm eager to work with talented teams solving complex technical challenges.</p>
+                
+                <p><span class="highlight">Growth and Learning</span>: Shopify's culture of continuous learning and development aligns perfectly with my desire to constantly expand my skills and take on new challenges.</p>
+                
+                <p><span class="highlight">Product Focus</span>: I appreciate Shopify's approach to building merchant-focused products that are both powerful and user-friendly. This balance of technical depth and usability is something I strive for in my own work.</p>
+                
+                <p>I believe my technical skills combined with my leadership experience make me a strong fit for Shopify's collaborative and innovative culture.</p>
+                `;
+                addOutput(whyShopifyContent);
+                addNewInputLine();
+            }
+
+            function showContact() {
+                const contactContent = `
+                <p>I'd love to connect! Here's how you can reach me:</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span> your.email@example.com
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">GitHub:</span> <a href="https://github.com/NicholasWahome" class="project-link" target="_blank">github.com/NicholasWahome</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">LinkedIn:</span> <a href="https://linkedin.com/in/nicholas-werugia" class="project-link" target="_blank">linkedin.com/in/nicholas-werugia</a>
+                    </div>
+                </div>
+                
+                <p>Feel free to reach out anytime to discuss opportunities at Shopify!</p>
+                `;
+                addOutput(contactContent);
+                addNewInputLine();
+            }
+
+            function clearTerminal() {
+                const asciiArt = document.getElementById('ascii-art').cloneNode(true);
+                commandHistory.innerHTML = '';
+                commandHistory.appendChild(asciiArt);
+                addNewInputLine();
+            }
+
+            function showUnknownCommand(command) {
+                addOutput(`Command not found: ${command}. Type <span class="highlight">help</span> to see available commands.`);
+                addNewInputLine();
+            }
+
+            // Process 'help' command initially
+            processCommand('help');
+        });
     </script>
 </body>
 </html>
