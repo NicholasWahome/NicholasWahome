@@ -1,110 +1,632 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>NicholasWahome</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicholas Werugia | Terminal Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --terminal-bg: #161b22;
+            --text-color: #58a6ff;
+            --text-secondary: #8b949e;
+            --accent-color: #58a6ff;
+            --success-color: #3fb950;
+            --error-color: #f85149;
+            --prompt-color: #3fb950;
+            --command-color: #e6edf3;
+            --link-color: #58a6ff;
+            --border-color: #30363d;
+        }
 
-		<!-- Nav -->
-			<nav id="nav">
-				<ul class="container">
-					<li><a href="#top">Top</a></li>
-					<li><a href="#portfolio">Portfolio</a></li>
-				</ul>
-			</nav>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
 
-		<!-- Home -->
-			<article id="top" class="wrapper style1">
-				<div class="container">
-					<div class="row">
-						<div class="col-4 col-5-large col-12-medium">
-							<span class="image fit"><img src="images/pic00.jpeg" alt="" /></span>
-						</div>
-						<div class="col-8 col-7-large col-12-medium">
-							<header>
-								<h1>Hello. I'm <strong>Nicholas W</strong>.</h1>
-							</header>
-							<p>And this my <strong>Portfolio</strong></p>
-							<a href="#portfolio" class="button large scrolly">See some of my recent work</a>
-						</div>
-					</div>
-				</div>
-			</article>
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden; /* Prevent scrollbars from Three.js canvas */
+            position: relative;
+        }
+        
+        #three-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4; /* Semi-transparent to not distract from content */
+        }
 
+        .terminal {
+            background-color: var(--terminal-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1; /* Ensure terminal is above the Three.js background */
+            backdrop-filter: blur(5px); /* Add slight blur effect for glass-like appearance */
+        }
 
-		<!-- Portfolio -->
-			<article id="portfolio" class="wrapper style3">
-				<div class="container">
-					<header>
-						<h2>Here’s recent projects I made...</h2>
-						<p>Currently working towards building up my portfolio</p>
-					</header>
-					<div class="row">
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://github.com/NicholasWahome/SimpleImageClassification" class="image featured"><img src="images/NaturalScenes.jpeg" alt="" /></a>
-								<h3><a href="https://github.com/NicholasWahome/SimpleImageClassification">Natural Scenes Model</a></h3>
-								<p>Image Classifcation of Intel Natural Scenes dataset using Tensorflow & Keras</p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://github.com/NicholasWahome/CondoCare" class="image featured"><img src="images/CondoCare.png" alt="" /></a>
-								<h3><a href="https://github.com/NicholasWahome/CondoCare">CondoCare - Team Project</a></h3>
-								<p></p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://github.com/NicholasWahome/SOEN287" class="image featured"><img src="images/GetSoft.png" alt="" /></a>
-								<h3><a href="https://github.com/NicholasWahome/SOEN287">GetSoft - Team Project</a></h3>
-								<p></p>
-							</article>
-						</div>
-					
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://github.com/NicholasWahome/StackOverwhelmed" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
-								<h3><a href="https://github.com/NicholasWahome/StackOverwhelmed">StackOverwhelmed - Team project</a></h3>
-								<p></p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://github.com/NicholasWahome/conuhacks-2022" class="image featured"><img src="images/SparkOfJoy.png" alt="" /></a>
-								<h3><a href="https://github.com/NicholasWahome/conuhacks-2022">SparksOfJoy - Team Prize Winner</a></h3>
-								<p></p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://github.com/NicholasWahome/Database-Team-Project" class="image featured"><img src="images/DatabaseProject.jpg" alt="" /></a>
-								<h3><a href="https://github.com/NicholasWahome/Database-Team-Project">Database Team Project</a></h3>
-								<p></p>
-							</article>
-						</div>
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="https://github.com/NicholasWahome/SOEN357" class="image featured"><img src="images/SpecSquad.png" alt="" /></a>
-								<h3><a href="https://github.com/NicholasWahome/SOEN357">UI project</a></h3>
-								<p></p>
-							</article>
-						</div>
-						
-						<div class="col-4 col-6-medium col-12-small">
-							<article class="box style2">
-								<a href="" class="image featured"><img src="images/pic06.jpg" alt="" /></a>
-								<h3><a href="">Leader of Software Architecture and Design and Software Requirements </a></h3>
-								<p>Led two teams of 10 each in 2 classes during the same semester.</p>
-							</article>
-						</div>
-						
-					</div>
-				</div>
-			</article>
+        .terminal-header {
+            background-color: var(--border-color);
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-	</body>
+        .terminal-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close-btn {
+            background-color: var(--error-color);
+        }
+
+        .minimize-btn {
+            background-color: #f7ca18;
+        }
+
+        .maximize-btn {
+            background-color: var(--success-color);
+        }
+
+        .terminal-title {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .terminal-body {
+            padding: 15px;
+            overflow-y: auto;
+            flex: 1;
+            line-height: 1.5;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+        }
+
+        .terminal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .terminal-body::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .prompt {
+            color: var(--prompt-color);
+            margin-right: 8px;
+        }
+
+        .command {
+            color: var(--command-color);
+        }
+
+        .output {
+            margin: 10px 0 20px;
+            color: var(--text-secondary);
+        }
+
+        .user-input-line {
+            display: flex;
+            margin-top: 5px;
+        }
+
+        #user-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--command-color);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        /* Blinking cursor */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: var(--command-color);
+            animation: blink 1s step-end infinite;
+            margin-left: 1px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .help-list {
+            list-style-type: none;
+            margin-left: 15px;
+        }
+
+        .help-list li {
+            margin-bottom: 5px;
+        }
+
+        .help-command {
+            color: var(--accent-color);
+            font-weight: bold;
+            width: 120px;
+            display: inline-block;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .project-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .project-card {
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .project-title {
+            color: var(--link-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .ascii-art {
+            color: var(--accent-color);
+            white-space: pre;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .project-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="three-background"></div>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-controls">
+                <div class="control-btn close-btn"></div>
+                <div class="control-btn minimize-btn"></div>
+                <div class="control-btn maximize-btn"></div>
+            </div>
+            <div class="terminal-title">nicholas@werugia:~/portfolio</div>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+            <div class="ascii-art">
+ _   _ _      _           _                 
+| \ | (_)    | |         | |                
+|  \| |_  ___| |__   ___ | | __ _ ___       
+| . ` | |/ __| '_ \ / _ \| |/ _` / __|      
+| |\  | | (__| | | | (_) | | (_| \__ \      
+\_| \_/_|\___|_| |_|\___/|_|\__,_|___/      
+                        
+__          __                   _       
+\ \        / /                  (_)      
+ \ \  /\  / /__ _ __ _   _  __ _ _  __ _ 
+  \ \/  \/ / _ \ '__| | | |/ _` | |/ _` |
+   \  /\  /  __/ |  | |_| | (_| | | (_| |
+    \/  \/ \___|_|   \__,_|\__, |_|\__,_|
+                            __/ |        
+                           |___/         
+</div>
+            <div class="command-line">
+                <span class="prompt">visitor@nicholas-werugia:~$</span>
+                <span class="command">echo "Welcome to my terminal portfolio!"</span>
+            </div>
+            <div class="output">
+                Welcome to my terminal portfolio!
+            </div>
+
+            <div class="command-line">
+                <span class="prompt">visitor@nicholas-portfolio:~$</span>
+                <span class="command">help</span>
+            </div>
+            <div class="output">
+                Available commands:
+                <ul class="help-list">
+                    <li><span class="help-command">about</span> - Learn about me</li>
+                    <li><span class="help-command">projects</span> - View my projects</li>
+                    <li><span class="help-command">skills</span> - View my technical skills</li>
+                    <li><span class="help-command">contact</span> - How to reach me</li>
+                    <li><span class="help-command">clear</span> - Clear the terminal</li>
+                    <li><span class="help-command">help</span> - Display this help message</li>
+                </ul>
+                Type a command and press Enter to execute.
+            </div>
+
+            <div id="command-history"></div>
+
+            <div class="user-input-line">
+                <span class="prompt">visitor@nicholas-portfolio:~$</span>
+                <input type="text" id="user-input" autofocus spellcheck="false">
+                <span class="cursor"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal-body');
+        const userInput = document.getElementById('user-input');
+        const commandHistory = document.getElementById('command-history');
+
+        // Focus on input when clicking anywhere in the terminal
+        terminal.addEventListener('click', () => {
+            userInput.focus();
+        });
+
+        userInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = userInput.value.trim();
+                processCommand(command);
+                userInput.value = '';
+                // Scroll to the bottom
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        });
+
+        function processCommand(command) {
+            // Add command to history
+            addToHistory(command);
+
+            // Process command
+            switch(command.toLowerCase()) {
+                case 'help':
+                    showHelp();
+                    break;
+                case 'about':
+                    showAbout();
+                    break;
+                case 'projects':
+                    showProjects();
+                    break;
+                case 'skills':
+                    showSkills();
+                    break;
+                case 'contact':
+                    showContact();
+                    break;
+                case 'clear':
+                    clearTerminal();
+                    break;
+                case '':
+                    // Just add a new line for empty commands
+                    addNewInputLine();
+                    break;
+                default:
+                    showUnknownCommand(command);
+            }
+        }
+
+        function addToHistory(command) {
+            const commandLine = document.createElement('div');
+            commandLine.className = 'command-line';
+            commandLine.innerHTML = `<span class="prompt">visitor@nicholas-portfolio:~$</span><span class="command">${command}</span>`;
+            commandHistory.appendChild(commandLine);
+        }
+
+        function addOutput(output) {
+            const outputElement = document.createElement('div');
+            outputElement.className = 'output';
+            outputElement.innerHTML = output;
+            commandHistory.appendChild(outputElement);
+        }
+
+        function addNewInputLine() {
+            const inputLine = document.createElement('div');
+            inputLine.className = 'user-input-line';
+            inputLine.innerHTML = `<span class="prompt">visitor@nicholas-portfolio:~$</span>`;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = 'user-input';
+            input.autofocus = true;
+            input.spellcheck = false;
+            
+            const cursor = document.createElement('span');
+            cursor.className = 'cursor';
+            
+            document.querySelector('.user-input-line').remove();
+            inputLine.appendChild(input);
+            inputLine.appendChild(cursor);
+            terminal.appendChild(inputLine);
+            input.focus();
+        }
+
+        function showHelp() {
+            const help = `
+                Available commands:
+                <ul class="help-list">
+                    <li><span class="help-command">about</span> - Learn about me</li>
+                    <li><span class="help-command">projects</span> - View my projects</li>
+                    <li><span class="help-command">skills</span> - View my technical skills</li>
+                    <li><span class="help-command">contact</span> - How to reach me</li>
+                    <li><span class="help-command">clear</span> - Clear the terminal</li>
+                    <li><span class="help-command">help</span> - Display this help message</li>
+                </ul>
+                Type a command and press Enter to execute.
+            `;
+            addOutput(help);
+            addNewInputLine();
+        }
+
+        function showAbout() {
+            const about = `
+                <div class="about-section">
+                    <h3 style="color: var(--accent-color); margin-bottom: 10px;">Nicholas Werugia</h3>
+                    <p>Hello! I'm a software developer passionate about creating elegant solutions to complex problems.</p>
+                    <p>I've worked on various projects ranging from machine learning models like Natural Scenes Image Classification 
+                    to team-based software projects like CondoCare and GetSoft.</p>
+                    <p>My experience includes leading teams in Software Architecture and Design and Software Requirements, 
+                    where I successfully managed two teams of 10 each simultaneously.</p>
+                    <p>Type 'projects' to see my work or 'skills' to see my technical expertise.</p>
+                </div>
+            `;
+            addOutput(about);
+            addNewInputLine();
+        }
+
+        function showProjects() {
+            const projects = `
+                <h3 style="color: var(--accent-color); margin-bottom: 15px;">My Projects</h3>
+                <div class="project-container">
+                    <div class="project-card">
+                        <div class="project-title">Natural Scenes Model</div>
+                        <div class="project-description">Image Classification of Intel Natural Scenes dataset using Tensorflow & Keras</div>
+                        <a href="https://github.com/NicholasWahome/SimpleImageClassification" class="project-link" target="_blank">View on GitHub →</a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">CondoCare - Team Project</div>
+                        <div class="project-description">A platform for managing condominium services and maintenance</div>
+                        <a href="https://github.com/NicholasWahome/CondoCare" class="project-link" target="_blank">View on GitHub →</a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">GetSoft - Team Project</div>
+                        <div class="project-description">Software distribution platform developed as part of a team</div>
+                        <a href="https://github.com/NicholasWahome/SOEN287" class="project-link" target="_blank">View on GitHub →</a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">StackOverwhelmed - Team project</div>
+                        <div class="project-description">Collaborative Q&A platform for developers</div>
+                        <a href="https://github.com/NicholasWahome/StackOverwhelmed" class="project-link" target="_blank">View on GitHub →</a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">SparksOfJoy - Team Prize Winner</div>
+                        <div class="project-description">Award-winning project from conuhacks-2022</div>
+                        <a href="https://github.com/NicholasWahome/conuhacks-2022" class="project-link" target="_blank">View on GitHub →</a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">Database Team Project</div>
+                        <div class="project-description">Collaborative database design and implementation</div>
+                        <a href="https://github.com/NicholasWahome/Database-Team-Project" class="project-link" target="_blank">View on GitHub →</a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-title">UI Project</div>
+                        <div class="project-description">User interface design and development project (SpecSquad)</div>
+                        <a href="https://github.com/NicholasWahome/SOEN357" class="project-link" target="_blank">View on GitHub →</a>
+                    </div>
+                </div>
+            `;
+            addOutput(projects);
+            addNewInputLine();
+        }
+
+        function showSkills() {
+            const skills = `
+                <h3 style="color: var(--accent-color); margin-bottom: 15px;">Technical Skills</h3>
+                
+                <div style="margin-bottom: 15px;">
+                    <h4 style="color: var(--command-color); margin-bottom: 8px;">Programming Languages</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">JavaScript</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Python</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Java</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">HTML/CSS</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">SQL</span>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <h4 style="color: var(--command-color); margin-bottom: 8px;">Frameworks & Technologies</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">React</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">TensorFlow</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Keras</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Git</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Node.js</span>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <h4 style="color: var(--command-color); margin-bottom: 8px;">Soft Skills</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Team Leadership</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Project Management</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Problem Solving</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 4px;">Communication</span>
+                    </div>
+                </div>
+                
+                <p>Type 'projects' to see these skills in action!</p>
+            `;
+            addOutput(skills);
+            addNewInputLine();
+        }
+
+        function showContact() {
+            const contact = `
+                <h3 style="color: var(--accent-color); margin-bottom: 15px;">Contact Me</h3>
+                <p>I'm always open to interesting conversations and opportunities!</p>
+                <ul style="list-style-type: none; margin: 15px 0;">
+                    <li style="margin-bottom: 10px;">📧 Email: <a href="mailto:your.email@example.com">your.email@example.com</a></li>
+                    <li style="margin-bottom: 10px;">🔗 GitHub: <a href="https://github.com/NicholasWahome" target="_blank">github.com/NicholasWahome</a></li>
+                    <li style="margin-bottom: 10px;">🔗 LinkedIn: <a href="https://linkedin.com/in/nicholas-wahome" target="_blank">linkedin.com/in/nicholas-wahome</a></li>
+                </ul>
+                <p>Feel free to reach out for collaborations, job opportunities, or just to say hello!</p>
+            `;
+            addOutput(contact);
+            addNewInputLine();
+        }
+
+        function clearTerminal() {
+            commandHistory.innerHTML = '';
+            addNewInputLine();
+        }
+
+        function showUnknownCommand(command) {
+            addOutput(`Command not found: ${command}. Type 'help' to see available commands.`);
+            addNewInputLine();
+        }
+
+        // Initialize by processing 'help' command to show available commands
+        processCommand('about');
+    </script>
+    
+    <script>
+        // Three.js background with floating prism
+        const initThreeJS = () => {
+            // Scene setup
+            const scene = new THREE.Scene();
+            
+            // Camera setup
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Renderer setup
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0); // Transparent background
+            document.getElementById('three-background').appendChild(renderer.domElement);
+            
+            // Create prism geometry (hexagonal)
+            const geometry = new THREE.CylinderGeometry(1, 1, 2, 6, 1, false);
+            
+            // Materials with different colors for each face
+            const materials = [
+                new THREE.MeshBasicMaterial({ color: 0x58a6ff, transparent: true, opacity: 0.7, wireframe: true }),
+                new THREE.MeshBasicMaterial({ color: 0x3fb950, transparent: true, opacity: 0.7, wireframe: true })
+            ];
+            
+            // Create multiple prisms
+            const prisms = [];
+            for (let i = 0; i < 5; i++) {
+                const prism = new THREE.Mesh(geometry, materials[i % 2]);
+                
+                // Random positions
+                prism.position.x = (Math.random() - 0.5) * 10;
+                prism.position.y = (Math.random() - 0.5) * 10;
+                prism.position.z = (Math.random() - 0.5) * 5 - 2;
+                
+                // Random rotation
+                prism.rotation.x = Math.random() * Math.PI;
+                prism.rotation.y = Math.random() * Math.PI;
+                
+                // Random rotation speeds
+                prism.userData = {
+                    rotationSpeedX: (Math.random() - 0.5) * 0.01,
+                    rotationSpeedY: (Math.random() - 0.5) * 0.01,
+                    floatSpeed: Math.random() * 0.005 + 0.002,
+                    floatDistance: Math.random() * 0.5 + 0.5,
+                    floatOffset: Math.random() * Math.PI * 2
+                };
+                
+                scene.add(prism);
+                prisms.push(prism);
+            }
+            
+            // Add some subtle lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(0, 1, 1);
+            scene.add(directionalLight);
+            
+            // Animation loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                // Rotate and float each prism
+                prisms.forEach(prism => {
+                    prism.rotation.x += prism.userData.rotationSpeedX;
+                    prism.rotation.y += prism.userData.rotationSpeedY;
+                    
+                    // Gentle floating motion
+                    const time = Date.now() * 0.001;
+                    prism.position.y += Math.sin(time * prism.userData.floatSpeed + prism.userData.floatOffset) * 0.01 * prism.userData.floatDistance;
+                });
+                
+                renderer.render(scene, camera);
+            };
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            animate();
+        };
+        
+        // Initialize Three.js scene after page loads
+        window.addEventListener('load', initThreeJS);
+    </script>
+</body>
 </html>
