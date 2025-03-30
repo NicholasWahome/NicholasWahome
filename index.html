@@ -1,9 +1,273 @@
-<!DOCTYPE html>
+// Contact form handling
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Here you would normally send the form data to a server
+                    // But for now, we'll just show a success message
+                    document.getElementById('form-success').style.display = 'block';
+                    contactForm.reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        document.getElementById('form-success').style.display = 'none';
+                    }, 5000);
+                });
+            }
+            
+            // Initialize Three.js Robot
+            function initRobotAnimation() {
+                // Get the canvas element
+                const canvas = document.getElementById('robot-background');
+                if (!canvas) return;
+                
+                // Scene setup
+                const scene = new THREE.Scene();
+                
+                // Camera setup
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 30;
+                
+                // Renderer setup
+                const renderer = new THREE.WebGLRenderer({ 
+                    canvas: canvas,
+                    alpha: true,
+                    antialias: true 
+                });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setClearColor(0x000000, 0); // Transparent background
+                
+                // Materials
+                const lineMaterial = new THREE.LineBasicMaterial({ 
+                    color: 0x2980b9,
+                    transparent: true,
+                    opacity: 0.2,
+                    linewidth: 1
+                });
+                
+                const jointMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0x3498db,
+                    transparent: true,
+                    opacity: 0.3
+                });
+                
+                // Create a robot with stick figure appearance
+                const robot = new THREE.Group();
+                
+                // Head
+                const head = new THREE.Mesh(
+                    new THREE.SphereGeometry(1.5, 8, 8),
+                    jointMaterial
+                );
+                head.position.y = 8;
+                robot.add(head);
+                
+                // Body
+                const bodyGeometry = new THREE.BufferGeometry();
+                const bodyPoints = [
+                    new THREE.Vector3(0, 8, 0), // Connect to head
+                    new THREE.Vector3(0, 0, 0)  // Connect to legs
+                ];
+                bodyGeometry.setFromPoints(bodyPoints);
+                const body = new THREE.Line(bodyGeometry, lineMaterial);
+                robot.add(body);
+                
+                // Arms
+                const leftShoulder = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.8, 8, 8),
+                    jointMaterial
+                );
+                leftShoulder.position.set(-2.5, 6, 0);
+                robot.add(leftShoulder);
+                
+                const rightShoulder = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.8, 8, 8),
+                    jointMaterial
+                );
+                rightShoulder.position.set(2.5, 6, 0);
+                robot.add(rightShoulder);
+                
+                const leftArmGeometry = new THREE.BufferGeometry();
+                const leftArmPoints = [
+                    new THREE.Vector3(-2.5, 6, 0),  // Shoulder
+                    new THREE.Vector3(-6, 2, 0)    // Hand
+                ];
+                leftArmGeometry.setFromPoints(leftArmPoints);
+                const leftArm = new THREE.Line(leftArmGeometry, lineMaterial);
+                robot.add(leftArm);
+                
+                const rightArmGeometry = new THREE.BufferGeometry();
+                const rightArmPoints = [
+                    new THREE.Vector3(2.5, 6, 0),  // Shoulder
+                    new THREE.Vector3(6, 2, 0)    // Hand
+                ];
+                rightArmGeometry.setFromPoints(rightArmPoints);
+                const rightArm = new THREE.Line(rightArmGeometry, lineMaterial);
+                robot.add(rightArm);
+                
+                // Left hand
+                const leftHand = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.8, 8, 8),
+                    jointMaterial
+                );
+                leftHand.position.set(-6, 2, 0);
+                robot.add(leftHand);
+                
+                // Right hand
+                const rightHand = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.8, 8, 8),
+                    jointMaterial
+                );
+                rightHand.position.set(6, 2, 0);
+                robot.add(rightHand);
+                
+                // Legs
+                const leftHip = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.8, 8, 8),
+                    jointMaterial
+                );
+                leftHip.position.set(-2, 0, 0);
+                robot.add(leftHip);
+                
+                const rightHip = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.8, 8, 8),
+                    jointMaterial
+                );
+                rightHip.position.set(2, 0, 0);
+                robot.add(rightHip);
+                
+                const leftLegGeometry = new THREE.BufferGeometry();
+                const leftLegPoints = [
+                    new THREE.Vector3(-2, 0, 0),  // Hip
+                    new THREE.Vector3(-3, -6, 0)  // Foot
+                ];
+                leftLegGeometry.setFromPoints(leftLegPoints);
+                const leftLeg = new THREE.Line(leftLegGeometry, lineMaterial);
+                robot.add(leftLeg);
+                
+                const rightLegGeometry = new THREE.BufferGeometry();
+                const rightLegPoints = [
+                    new THREE.Vector3(2, 0, 0),   // Hip
+                    new THREE.Vector3(3, -6, 0)   // Foot
+                ];
+                rightLegGeometry.setFromPoints(rightLegPoints);
+                const rightLeg = new THREE.Line(rightLegGeometry, lineMaterial);
+                robot.add(rightLeg);
+                
+                // Left foot
+                const leftFoot = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.8, 8, 8),
+                    jointMaterial
+                );
+                leftFoot.position.set(-3, -6, 0);
+                robot.add(leftFoot);
+                
+                // Right foot
+                const rightFoot = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.8, 8, 8),
+                    jointMaterial
+                );
+                rightFoot.position.set(3, -6, 0);
+                robot.add(rightFoot);
+                
+                // Add robot to scene
+                scene.add(robot);
+                
+                // Center robot in view
+                robot.position.set(0, 3, 0);
+                
+                // Add some floating code particles
+                const particlesCount = 50;
+                const particles = new THREE.Group();
+                
+                for (let i = 0; i < particlesCount; i++) {
+                    // Create a line representing a piece of code
+                    const lineLength = Math.random() * 3 + 1;
+                    const lineGeometry = new THREE.BufferGeometry();
+                    const linePoints = [
+                        new THREE.Vector3(0, 0, 0),
+                        new THREE.Vector3(lineLength, 0, 0)
+                    ];
+                    lineGeometry.setFromPoints(linePoints);
+                    
+                    const particleMaterial = new THREE.LineBasicMaterial({
+                        color: 0x3498db,
+                        transparent: true,
+                        opacity: Math.random() * 0.2 + 0.1
+                    });
+                    
+                    const line = new THREE.Line(lineGeometry, particleMaterial);
+                    
+                    // Random position within view
+                    line.position.x = Math.random() * 60 - 30;
+                    line.position.y = Math.random() * 40 - 20;
+                    line.position.z = Math.random() * 10 - 15;
+                    
+                    // Random rotation
+                    line.rotation.z = Math.random() * Math.PI;
+                    
+                    // Store original position for animation
+                    line.userData = {
+                        originalY: line.position.y,
+                        speed: Math.random() * 0.02 + 0.01,
+                        amplitude: Math.random() * 1 + 0.5
+                    };
+                    
+                    particles.add(line);
+                }
+                
+                scene.add(particles);
+                
+                // Animation
+                const clock = new THREE.Clock();
+                
+                function animate() {
+                    requestAnimationFrame(animate);
+                    
+                    const elapsedTime = clock.getElapsedTime();
+                    
+                    // Rotate robot slowly
+                    robot.rotation.y = Math.sin(elapsedTime * 0.2) * 0.5;
+                    
+                    // Gentle floating motion
+                    robot.position.y = 3 + Math.sin(elapsedTime * 0.5) * 0.5;
+                    
+                    // Animate arms for a thinking/working pose
+                    const armAngle = Math.sin(elapsedTime * 0.7) * 0.2;
+                    leftArm.rotation.z = armAngle;
+                    rightArm.rotation.z = -armAngle;
+                    
+                    // Animate particles
+                    particles.children.forEach((particle, i) => {
+                        const data = particle.userData;
+                        particle.position.y = data.originalY + Math.sin(elapsedTime * data.speed + i) * data.amplitude;
+                        particle.rotation.z += 0.001;
+                    });
+                    
+                    renderer.render(scene, camera);
+                }
+                
+                // Handle window resize
+                function onWindowResize() {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                }
+                
+                window.addEventListener('resize', onWindowResize);
+                
+                // Start animation
+                animate();
+            }
+            
+            // Initialize robot animation when DOM is loaded
+            initRobotAnimation();<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nicholas Werugia | Machine Learning Engineer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
             --primary-color: #2980b9;
@@ -184,48 +448,16 @@
             overflow: hidden;
             top: 0;
             left: 0;
+            z-index: 1;
         }
 
-        .shape {
+        #robot-background {
             position: absolute;
-            opacity: 0.15;
-            border-radius: 50%;
-        }
-
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            background: var(--primary-color);
-            top: 20%;
-            left: 10%;
-            animation: float 20s infinite alternate ease-in-out;
-        }
-
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            background: var(--secondary-color);
-            top: 60%;
-            right: 10%;
-            animation: float 15s infinite alternate-reverse ease-in-out;
-        }
-
-        .shape-3 {
-            width: 150px;
-            height: 150px;
-            background: var(--terminal-green);
-            bottom: 10%;
-            left: 30%;
-            animation: float 17s infinite alternate ease-in-out;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            100% {
-                transform: translate(50px, 50px) rotate(10deg);
-            }
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
         /* Section Styles */
@@ -824,9 +1056,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="shapes-container">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
+            <canvas id="robot-background"></canvas>
         </div>
         <div class="container">
             <div class="hero-content">
